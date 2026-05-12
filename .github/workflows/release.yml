@@ -1,0 +1,29 @@
+name: Render PlantUML schema
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  render-schema:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install PlantUML
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y plantuml
+
+      - name: Render schema.svg
+        run: |
+          plantuml -tsvg schema.puml
+
+      - name: Upload schema artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: schema-svg
+          path: schema.svg
