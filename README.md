@@ -101,14 +101,18 @@ Read the table carefully and describe one concrete example of each:
 
 > *Your answers:*
 > Update anomaly:
-If mechanic Huber, Tom raises his hourly rate from 65.00 to 70.00, all rows where MechId = M03 must be updated. In the given table, this affects:
+>If mechanic Huber, Tom raises his hourly rate from 65.00 to 70.00, all rows where MechId = M03 must be updated. In the given table, this affects:
 •	Order 1001, Item 1
 •	Order 1001, Item 2
 •	Order 1003, Item 1
 If one row is forgotten, the database will contain inconsistent hourly rates for the same mechanic.
-Insert anomaly:
+
+
+>Insert anomaly:
 A new mechanic cannot be added before they work on their first order, because the flat table requires an OrderNo and ItemNo. Without an order item, there is no place to store only the mechanic data such as MechId, MechName, and HourlyRate.
-Delete anomaly:
+
+
+>Delete anomaly:
 If order 1002 is deleted entirely, we lose not only the repair item, but also the information about:
 •	Customer K02, Novak, Jana
 •	Her city, Herne
