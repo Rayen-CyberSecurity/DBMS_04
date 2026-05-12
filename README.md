@@ -157,9 +157,9 @@ definition from Lecture 04.
 > *Your answer:*
 > CustNo → CustCity is neither a full nor a partial dependency with respect to the primary key (OrderNo, ItemNo).
 
-A full or partial dependency must be considered in relation to the key. According to the Lecture 04 definition, a partial dependency exists when a non-key attribute depends on a proper subset of a candidate key. Here, the key is (OrderNo, ItemNo), but CustNo is not part of this key. Therefore, CustNo → CustCity is not a dependency from the whole key or from part of the key.
+>A full or partial dependency must be considered in relation to the key. According to the Lecture 04 definition, a partial dependency exists when a non-key attribute depends on a proper subset of a candidate key.   >Here, the key is (OrderNo, ItemNo), but CustNo is not part of this key. Therefore, CustNo → CustCity is not a dependency from the whole key or from part of the key.
 
-However, it is still important because it contributes to a transitive dependency. Since an order determines the customer, and the customer determines the city, the city is indirectly determined through CustNo.
+>However, it is still important because it contributes to a transitive dependency. Since an order determines the customer, and the customer determines the city, the city is indirectly determined through CustNo.
 
 **Question 1.2:** Identify a transitive dependency in the flat table and explain
 why it violates 3NF.
@@ -167,11 +167,11 @@ why it violates 3NF.
 > *Your answer:*
 > A transitive dependency in the flat table is:
 > (OrderNo, ItemNo) → CustNo
-CustNo → CustName, CustCity
+>CustNo → CustName, CustCity
 > Therefore: (OrderNo, ItemNo) → CustName, CustCity
 > This is transitive because the primary key determines CustNo, and then CustNo determines CustName and CustCity.
 
-This violates 3NF because CustNo is not a superkey of the flat table, but it determines non-key attributes such as CustName and CustCity. In 3NF, non-key attributes should not depend on another non-key attribute. Lecture 04 explains that a transitive dependency occurs when X→Y and Y→Z, so Z depends on X through an intermediate attribute Y.
+>This violates 3NF because CustNo is not a superkey of the flat table, but it determines non-key attributes such as CustName and CustCity. In 3NF, non-key attributes should not depend on another non-key attribute. Lecture 04 explains that a transitive dependency occurs when X→Y and Y→Z, so Z depends on X through an intermediate attribute Y.
 
 **Question 1.3:** Compute the attribute closure $\{\mathrm{OrderNo}\}^+$ using
 your FD list. Is `OrderNo` alone a superkey of the flat table?
@@ -179,45 +179,45 @@ your FD list. Is `OrderNo` alone a superkey of the flat table?
 > *Your answer:*
 > Question 1.3
 
-Using the FD list:
+>Using the FD list:
 
-OrderNo → Date, CustNo, Plate
-CustNo → CustName, CustCity
-Plate → Make, Model, Year, CustNo
+>OrderNo → Date, CustNo, Plate
+>CustNo → CustName, CustCity
+>Plate → Make, Model, Year, CustNo
 
-Start with:
+>Start with:
 
-{OrderNo}+ = {OrderNo}
+>{OrderNo}+ = {OrderNo}
 
-Apply:
+>Apply:
 
-OrderNo → Date, CustNo, Plate
+>OrderNo → Date, CustNo, Plate
 
-So now:
+>So now:
 
-{OrderNo}+ = {OrderNo, Date, CustNo, Plate}
+>{OrderNo}+ = {OrderNo, Date, CustNo, Plate}
 
-Then apply:
+>Then apply:
 
-CustNo → CustName, CustCity
+>CustNo → CustName, CustCity
 
-So now:
+>So now:
 
-{OrderNo}+ = {OrderNo, Date, CustNo, Plate, CustName, CustCity}
+>{OrderNo}+ = {OrderNo, Date, CustNo, Plate, CustName, CustCity}
 
-Then apply:
+>Then apply:
 
-Plate → Make, Model, Year, CustNo
+>Plate → Make, Model, Year, CustNo
 
-So finally:
+>So finally:
 
-{OrderNo}+ = {OrderNo, Date, CustNo, Plate, CustName, CustCity, Make, Model, Year}
+>{OrderNo}+ = {OrderNo, Date, CustNo, Plate, CustName, CustCity, Make, Model, Year}
 
-But this closure does not include:
+>But this closure does not include:
 
-ItemNo, Description, Hours, MechId, MechName, HourlyRate
+>ItemNo, Description, Hours, MechId, MechName, HourlyRate
 
-So OrderNo alone is not a superkey of the flat table.
+>So OrderNo alone is not a superkey of the flat table.
 
 ---
 
