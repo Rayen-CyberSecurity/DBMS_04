@@ -922,6 +922,11 @@ CREATE TABLE "order" (
    as a release artifact on every `v*` tag. Trigger a release with
    `git tag v1.0.0 && git push --tags`.
 
+   > bonus.sql contains the Bonus Tasks 1,2,3.
+   > Bonus Task 4 :
+   > <img width="507" height="360" alt="Screenshot 2026-05-12 182847" src="https://github.com/user-attachments/assets/316a8415-23f6-4c63-a920-a3435c3d1691" />
+
+
 ---
 
 ## Further Reading
