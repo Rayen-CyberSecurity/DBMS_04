@@ -924,6 +924,10 @@ CREATE TABLE "order" (
 
 
    > bonus.sql contains the Bonus Tasks 1,2,3.
+   
+
+
+
    > -- Bonus 1: Hourly Rate History
 -- This extension stores mechanic hourly rates historically.
 -- The mechanic table stores only mechanic identity data.
@@ -954,7 +958,7 @@ CREATE TABLE vehicle (
     model    TEXT    NOT NULL,
     year     INTEGER NOT NULL,
 
-    FOREIGN KEY (cust_no) REFERENCES customer(cust_no)
+ >   FOREIGN KEY (cust_no) REFERENCES customer(cust_no)
         ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
@@ -965,11 +969,11 @@ CREATE TABLE "order" (
     cust_no  INTEGER NOT NULL,
     date     DATE    NOT NULL,
 
-    FOREIGN KEY (plate) REFERENCES vehicle(plate)
+ >   FOREIGN KEY (plate) REFERENCES vehicle(plate)
         ON DELETE RESTRICT
         ON UPDATE CASCADE,
 
-    FOREIGN KEY (cust_no) REFERENCES customer(cust_no)
+ >   FOREIGN KEY (cust_no) REFERENCES customer(cust_no)
         ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
@@ -985,13 +989,13 @@ CREATE TABLE mechanic_rate (
     valid_to    DATE,
     hourly_rate REAL    NOT NULL CHECK (hourly_rate > 0),
 
-    PRIMARY KEY (mech_id, valid_from),
+ >   PRIMARY KEY (mech_id, valid_from),
 
-    FOREIGN KEY (mech_id) REFERENCES mechanic(mech_id)
+ >   FOREIGN KEY (mech_id) REFERENCES mechanic(mech_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
 
-    CHECK (valid_to IS NULL OR valid_to > valid_from)
+ >   CHECK (valid_to IS NULL OR valid_to > valid_from)
 );
 
 CREATE TABLE work_item (
@@ -1002,13 +1006,13 @@ CREATE TABLE work_item (
     description     TEXT    NOT NULL,
     hours           REAL    NOT NULL CHECK (hours > 0),
 
-    PRIMARY KEY (order_no, item_no),
+ >   PRIMARY KEY (order_no, item_no),
 
-    FOREIGN KEY (order_no) REFERENCES "order"(order_no)
+ >   FOREIGN KEY (order_no) REFERENCES "order"(order_no)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
 
-    FOREIGN KEY (mech_id, rate_valid_from)
+ >   FOREIGN KEY (mech_id, rate_valid_from)
         REFERENCES mechanic_rate(mech_id, valid_from)
         ON DELETE RESTRICT
         ON UPDATE CASCADE
@@ -1030,32 +1034,32 @@ CREATE TABLE order_part (
     part_id  INTEGER NOT NULL,
     quantity INTEGER NOT NULL CHECK (quantity > 0),
 
-    PRIMARY KEY (order_no, part_id),
+>PRIMARY KEY (order_no, part_id),
 
-    FOREIGN KEY (order_no) REFERENCES "order"(order_no)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
+>  FOREIGN KEY (order_no) REFERENCES "order"(order_no)
+>  ON DELETE CASCADE
+>     ON UPDATE CASCADE,
 
-    FOREIGN KEY (part_id) REFERENCES part(part_id)
-        ON DELETE RESTRICT
-        ON UPDATE CASCADE
-);
+>  FOREIGN KEY (part_id) REFERENCES part(part_id)
+>       ON DELETE RESTRICT
+>       ON UPDATE CASCADE
+>);
 
--- Bonus 3: Total Invoice per Order
--- Labour total only:
--- This query computes SUM(hours * historical hourly_rate) for each order.
+>-- Bonus 3: Total Invoice per Order
+>-- Labour total only:
+>-- This query computes SUM(hours * historical hourly_rate) for each order.
 
-SELECT
-    o.order_no,
-    ROUND(SUM(wi.hours * mr.hourly_rate), 2) AS labour_total
-FROM "order" o
-JOIN work_item wi
-    ON o.order_no = wi.order_no
-JOIN mechanic_rate mr
-    ON wi.mech_id = mr.mech_id
-   AND wi.rate_valid_from = mr.valid_from
-GROUP BY o.order_no
-ORDER BY o.order_no;
+>SELECT
+>    o.order_no,
+>   ROUND(SUM(wi.hours * mr.hourly_rate), 2) AS labour_total
+>FROM "order" o
+>JOIN work_item wi
+>    ON o.order_no = wi.order_no
+>JOIN mechanic_rate mr
+>    ON wi.mech_id = mr.mech_id
+>   AND wi.rate_valid_from = mr.valid_from
+>GROUP BY o.order_no
+>ORDER BY o.order_no;
    
    
    > Bonus Task 4 :
